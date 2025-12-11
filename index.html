@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método Fios de Ouro - Ficha de Inscrição</title>
     
-    <!-- 1. Fontes de Luxo -->
+    <!-- 1. Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -19,16 +19,8 @@
             theme: {
                 extend: {
                     colors: {
-                        amber: {
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                        },
-                        zinc: {
-                            850: '#1f1f22',
-                            900: '#18181b',
-                            950: '#09090b',
-                        }
+                        amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309' },
+                        zinc: { 850: '#1f1f22', 900: '#18181b', 950: '#09090b' }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -45,10 +37,9 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-        /* --- FUNDO PRINCIPAL COM GRADIENTE --- */
+        /* --- ESTILOS DE TELA (SCREEN) --- */
         body {
-            background-color: #09090b; /* Fundo base preto */
-            /* Gradiente radial sutil no centro para dar profundidade */
+            background-color: #09090b; 
             background-image: radial-gradient(circle at center top, #1f1f22 0%, #000000 100%);
             background-attachment: fixed;
             color: #f4f4f5;
@@ -56,49 +47,28 @@
             min-height: 100vh;
         }
 
-        /* --- IMAGENS LATERAIS DE FUNDO --- */
         .side-image {
             position: fixed;
-            top: 50%; /* Centraliza verticalmente */
+            top: 50%;
             transform: translateY(-50%);
-            width: 35vw; /* Ocupa 35% da largura da tela */
-            height: 90vh; /* Aumentei um pouco a altura para preencher melhor */
-            
-            /* MUDANÇA IMPORTANTE: 'cover' garante que a imagem toque as bordas onde o gradiente está */
-            background-size: cover; 
-            
+            width: 35vw;
+            height: 90vh;
+            background-size: cover;
             background-repeat: no-repeat;
-            background-position: center top; /* Foca no rosto/topo da imagem */
-            z-index: -1; /* Fica atrás de tudo */
-            opacity: 0.6; /* Levemente transparente */
-            pointer-events: none; /* Não interfere no clique */
-            
-            /* MÁSCARA LINEAR VERTICAL (Aplica o gradiente SOMENTE em cima e embaixo) */
-            /* Do topo (transparente) -> 15% (preto/visível) -> 85% (preto/visível) -> Fundo (transparente) */
+            background-position: center top;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
             mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
         }
 
-        .side-left {
-            left: 0;
-            background-image: url('Imagens/logo-seria-ingrid-camila.jpg');
-        }
+        .side-left { left: 0; background-image: url('Imagens/logo-seria-ingrid-camila.jpg'); }
+        .side-right { right: 0; background-image: url('Imagens/logo-alegre-ingrid-camila.jpg'); }
 
-        .side-right {
-            right: 0;
-            background-image: url('Imagens/logo-alegre-ingrid-camila.jpg');
-        }
+        @media (max-width: 1024px) { .side-image { display: none; } }
 
-        /* Esconde as imagens laterais em celulares para não poluir */
-        @media (max-width: 1024px) {
-            .side-image {
-                display: none;
-            }
-        }
-
-        .animate-fadeIn {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
+        .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
@@ -108,11 +78,146 @@
             box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
             border-color: #fbbf24;
         }
+
+        /* --- ESTILOS DE IMPRESSÃO (PDF DE LUXO) --- */
+        /* O segredo aqui é garantir que SOMENTE o #print-area seja visível */
+        @media print {
+            @page { margin: 0; size: A4; }
+            
+            body, html {
+                background-color: white !important;
+                background-image: none !important;
+                height: auto !important;
+                width: 100% !important;
+                overflow: visible !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+
+            /* Esconde tudo o que é da tela do site */
+            .side-image, .screen-view { 
+                display: none !important; 
+            }
+            
+            /* Força a exibição da área de impressão */
+            #print-area {
+                display: block !important;
+                position: relative !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 40px !important;
+                background: white !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            /* Estilização Luxuosa do PDF */
+            .pdf-container {
+                border: 2px solid #d97706; /* Borda Dourada */
+                padding: 40px;
+                min-height: 90vh; /* Ocupa a folha quase toda */
+                position: relative;
+                font-family: 'Inter', sans-serif;
+            }
+            
+            .pdf-header {
+                text-align: center;
+                border-bottom: 2px solid #fcd34d;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
+
+            .pdf-logo-container {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border: 3px solid #d97706;
+                margin: 0 auto 15px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .pdf-logo {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .pdf-title {
+                font-family: 'Playfair Display', serif;
+                font-size: 32px;
+                color: #b45309; /* Amber 700 - Escuro para leitura */
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .pdf-subtitle {
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 4px;
+                color: #52525b;
+                margin-bottom: 5px;
+            }
+
+            .pdf-section {
+                margin-bottom: 25px;
+                background-color: #fffbeb; /* Fundo levemente creme */
+                padding: 15px;
+                border-radius: 8px;
+                border: 1px solid #fcd34d;
+            }
+
+            .pdf-label {
+                font-size: 11px;
+                text-transform: uppercase;
+                color: #d97706;
+                font-weight: bold;
+                letter-spacing: 1px;
+                margin-bottom: 6px;
+                border-bottom: 1px solid #fcd34d;
+                display: inline-block;
+                padding-bottom: 2px;
+            }
+
+            .pdf-value {
+                font-size: 15px;
+                color: #18181b;
+                line-height: 1.5;
+            }
+
+            .pdf-footer {
+                position: absolute;
+                bottom: 30px;
+                left: 40px;
+                right: 40px;
+                text-align: center;
+                border-top: 1px solid #e5e7eb;
+                padding-top: 20px;
+            }
+
+            .pdf-social {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                font-size: 13px;
+                color: #333;
+                margin-top: 10px;
+                font-weight: 500;
+            }
+        }
+        
+        /* Esconde a área de impressão na tela normal */
+        #print-area { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- IMAGENS LATERAIS (CONFIGURADAS NO CSS ACIMA) -->
     <div class="side-image side-left"></div>
     <div class="side-image side-right"></div>
 
@@ -131,11 +236,12 @@
         const Tool = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>;
         const Target = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>;
         const TrendingUp = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>;
-        const CreditCard = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>;
         const CheckSquare = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>;
         const ArrowRight = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
         const ArrowLeft = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>;
         const Check = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="20 6 9 17 4 12"/></svg>;
+        const Download = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>;
+        const Send = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>;
 
         const App = () => {
             const [currentStep, setCurrentStep] = useState(0);
@@ -143,358 +249,187 @@
                 nome: '', whatsapp: '', instagram: '', 
                 trabalhaComCilios: '', tempoExperiencia: '', tecnicaUtilizada: '',
                 resultadosFaltantes: '', motivoEscolha: '', expectativaCurso: '',
-                formaPagamento: '', declaracaoAceita: false
+                declaracaoAceita: false
             });
 
-            // Dados das Redes Sociais da Gerenciadora
+            const numeroWhatsApp = "5599991022780"; 
+
             const socialLinks = {
-                whatsapp: "https://wa.me/+5599991022780", // Coloque o link do whats aqui
-                instagram: "https://www.instagram.com/ingridcamila.pmu/" // Coloque o link do insta aqui
+                whatsapp: `https://wa.me/${numeroWhatsApp}`, 
+                instagram: "https://instagram.com/ingridcamila.pmu"
             };
 
             const steps = [
-                {
-                    id: 'intro',
-                    type: 'intro',
-                    title: 'Método Fios de Ouro',
-                    description: 'Preencha esta ficha de inscrição para analisarmos o seu perfil para a próxima turma.',
-                },
-                {
-                    id: 'nome',
-                    category: 'IDENTIFICAÇÃO',
-                    type: 'input',
-                    inputType: 'text',
-                    title: 'Nome Completo',
-                    placeholder: 'Digite seu nome completo...',
-                    icon: <User className="w-6 h-6 text-amber-400" />
-                },
-                {
-                    id: 'whatsapp',
-                    category: 'CONTATO',
-                    type: 'input',
-                    inputType: 'tel',
-                    title: 'Telefone (WhatsApp)',
-                    placeholder: '(00) 90000-0000',
-                    icon: <Phone className="w-6 h-6 text-green-400" />
-                },
-                {
-                    id: 'instagram',
-                    category: 'REDES SOCIAIS',
-                    type: 'input',
-                    inputType: 'text',
-                    title: 'Instagram',
-                    placeholder: '@seu_perfil',
-                    icon: <Instagram className="w-6 h-6 text-pink-400" />
-                },
-                {
-                    id: 'trabalhaComCilios',
-                    category: 'EXPERIÊNCIA',
-                    type: 'select',
-                    title: 'Você já trabalha com extensão de cílios?',
-                    icon: <Eye className="w-6 h-6 text-amber-400" />,
-                    options: [
-                        { label: 'Sim', value: 'sim' },
-                        { label: 'Não', value: 'nao' }
-                    ]
-                },
-                {
-                    id: 'tempoExperiencia',
-                    category: 'JORNADA',
-                    type: 'select',
-                    title: 'Há quanto tempo?',
-                    condition: (ans) => ans.trabalhaComCilios === 'sim',
-                    icon: <Clock className="w-6 h-6 text-blue-400" />,
-                    options: [
-                        { label: 'Menos de 6 meses', value: 'menos_6_meses' },
-                        { label: '6 meses a 1 ano', value: '6m_1ano' },
-                        { label: '1 a 2 anos', value: '1_2anos' },
-                        { label: 'Mais de 2 anos', value: 'mais_2anos' }
-                    ]
-                },
-                {
-                    id: 'tecnicaUtilizada',
-                    category: 'MÉTODO ATUAL',
-                    type: 'input',
-                    inputType: 'text',
-                    title: 'Qual técnica você mais utiliza hoje?',
-                    placeholder: 'Ex: Fio a fio, Volume Russo...',
-                    condition: (ans) => ans.trabalhaComCilios === 'sim',
-                    icon: <Tool className="w-6 h-6 text-purple-400" />
-                },
-                {
-                    id: 'resultadosFaltantes',
-                    category: 'DIAGNÓSTICO',
-                    type: 'textarea',
-                    title: 'Quais resultados você sente que ainda não consegue entregar?',
-                    placeholder: 'Descreva sua maior dificuldade técnica...',
-                    icon: <Target className="w-6 h-6 text-red-400" />
-                },
-                {
-                    id: 'motivoEscolha',
-                    category: 'PROPÓSITO',
-                    type: 'textarea',
-                    title: 'Por que você escolheu fazer o Método Fios de Ouro?',
-                    placeholder: 'O que te chamou atenção...',
-                    icon: <Crown className="w-6 h-6 text-amber-500" />
-                },
-                {
-                    id: 'expectativaCurso',
-                    category: 'OBJETIVOS',
-                    type: 'textarea',
-                    title: 'O que você espera melhorar ou conquistar após o curso?',
-                    placeholder: 'Seu objetivo principal...',
-                    icon: <TrendingUp className="w-6 h-6 text-green-400" />
-                },
-                {
-                    id: 'formaPagamento',
-                    category: 'INVESTIMENTO',
-                    type: 'select',
-                    title: 'Como você pretende efetuar o pagamento?',
-                    icon: <CreditCard className="w-6 h-6 text-amber-200" />,
-                    options: [
-                        { label: 'À vista', value: 'a_vista' },
-                        { label: 'Sinal + restante no dia', value: 'sinal_restante' }
-                    ]
-                },
-                {
-                    id: 'declaracaoAceita',
-                    category: 'COMPROMISSO',
-                    type: 'declaration',
-                    title: 'Confirmação Final',
-                    icon: <CheckSquare className="w-6 h-6 text-amber-400" />,
-                    text: 'Declaro que estou ciente do valor de lançamento, datas, forma de pagamento e compromisso com a minha vaga.'
-                },
-                {
-                    id: 'summary',
-                    type: 'summary',
-                    title: 'Inscrição Enviada!'
-                }
+                { id: 'intro', type: 'intro', title: 'Método Fios de Ouro', description: 'Preencha esta ficha de inscrição para analisarmos o seu perfil.' },
+                { id: 'nome', category: 'IDENTIFICAÇÃO', type: 'input', inputType: 'text', title: 'Nome Completo', placeholder: 'Digite seu nome completo...', icon: <User className="w-6 h-6 text-amber-400" /> },
+                { id: 'whatsapp', category: 'CONTATO', type: 'input', inputType: 'tel', title: 'Telefone (WhatsApp)', placeholder: '(00) 90000-0000', icon: <Phone className="w-6 h-6 text-green-400" /> },
+                { id: 'instagram', category: 'REDES SOCIAIS', type: 'input', inputType: 'text', title: 'Instagram', placeholder: '@seu_perfil', icon: <Instagram className="w-6 h-6 text-pink-400" /> },
+                { id: 'trabalhaComCilios', category: 'EXPERIÊNCIA', type: 'select', title: 'Você já trabalha com extensão de cílios?', icon: <Eye className="w-6 h-6 text-amber-400" />, options: [{ label: 'Sim', value: 'sim' }, { label: 'Não', value: 'nao' }] },
+                { id: 'tempoExperiencia', category: 'JORNADA', type: 'select', title: 'Há quanto tempo?', condition: (ans) => ans.trabalhaComCilios === 'sim', icon: <Clock className="w-6 h-6 text-blue-400" />, options: [{ label: 'Menos de 6 meses', value: 'menos_6_meses' }, { label: '6 meses a 1 ano', value: '6m_1ano' }, { label: '1 a 2 anos', value: '1_2anos' }, { label: 'Mais de 2 anos', value: 'mais_2anos' }] },
+                { id: 'tecnicaUtilizada', category: 'MÉTODO ATUAL', type: 'input', inputType: 'text', title: 'Qual técnica você mais utiliza hoje?', placeholder: 'Ex: Fio a fio, Volume Russo...', condition: (ans) => ans.trabalhaComCilios === 'sim', icon: <Tool className="w-6 h-6 text-purple-400" /> },
+                { id: 'resultadosFaltantes', category: 'DIAGNÓSTICO', type: 'textarea', title: 'Quais resultados você sente que ainda não consegue entregar?', placeholder: 'Descreva sua maior dificuldade técnica...', icon: <Target className="w-6 h-6 text-red-400" /> },
+                { id: 'motivoEscolha', category: 'PROPÓSITO', type: 'textarea', title: 'Por que você escolheu fazer o Método Fios de Ouro?', placeholder: 'O que te chamou atenção...', icon: <Crown className="w-6 h-6 text-amber-500" /> },
+                { id: 'expectativaCurso', category: 'OBJETIVOS', type: 'textarea', title: 'O que você espera melhorar ou conquistar após o curso?', placeholder: 'Seu objetivo principal...', icon: <TrendingUp className="w-6 h-6 text-green-400" /> },
+                { id: 'declaracaoAceita', category: 'COMPROMISSO', type: 'declaration', title: 'Confirmação Final', icon: <CheckSquare className="w-6 h-6 text-amber-400" />, text: 'Declaro que estou ciente do valor de lançamento, datas, forma de pagamento e compromisso com a minha vaga.' },
+                { id: 'summary', type: 'summary', title: 'Ficha Pronta!' }
             ];
 
-            const getActiveStep = () => steps[currentStep];
-
-            const handleInputChange = (e, field) => {
-                setAnswers({ ...answers, [field]: e.target.value });
-            };
-
-            const handleSelect = (value) => {
-                const currentId = steps[currentStep].id;
-                setAnswers({ ...answers, [currentId]: value });
-                setTimeout(() => handleNext(value), 300);
-            };
-
-            const handleDeclaration = () => {
-                setAnswers({ ...answers, declaracaoAceita: !answers.declaracaoAceita });
-            };
-
-            const handleNext = (currentValueOverride) => {
-                const currentStepObj = steps[currentStep];
-                const valueToCheck = currentValueOverride || answers[currentStepObj.id];
-                let nextStepIndex = currentStep + 1;
-                
-                while (
-                    nextStepIndex < steps.length && 
-                    steps[nextStepIndex].condition && 
-                    !steps[nextStepIndex].condition({ ...answers, [currentStepObj.id]: valueToCheck }) 
-                ) {
-                    nextStepIndex++;
-                }
-                if (nextStepIndex < steps.length) setCurrentStep(nextStepIndex);
+            const handleNext = (val) => {
+                const currentObj = steps[currentStep];
+                const checkVal = val || answers[currentObj.id];
+                let next = currentStep + 1;
+                while (next < steps.length && steps[next].condition && !steps[next].condition({ ...answers, [currentObj.id]: checkVal })) next++;
+                if (next < steps.length) setCurrentStep(next);
             };
 
             const handleBack = () => {
-                let prevStepIndex = currentStep - 1;
-                while (
-                    prevStepIndex >= 0 && 
-                    steps[prevStepIndex].condition && 
-                    !steps[prevStepIndex].condition(answers)
-                ) {
-                    prevStepIndex--;
-                }
-                if (prevStepIndex >= 0) setCurrentStep(prevStepIndex);
+                let prev = currentStep - 1;
+                while (prev >= 0 && steps[prev].condition && !steps[prev].condition(answers)) prev--;
+                if (prev >= 0) setCurrentStep(prev);
             };
 
+            const sendToWhatsApp = () => {
+                const message = `*👑 INSCRIÇÃO: MÉTODO FIOS DE OURO*\n----------------------------------\n*Nome:* ${answers.nome}\n*Instagram:* ${answers.instagram}\n*WhatsApp:* ${answers.whatsapp}\n\n*Experiência:* ${answers.trabalhaComCilios === 'sim' ? 'Sim' : 'Não'}\n${answers.trabalhaComCilios === 'sim' ? `*Tempo:* ${answers.tempoExperiencia}\n*Técnica:* ${answers.tecnicaUtilizada}` : ''}\n\n*Dificuldade:* ${answers.resultadosFaltantes}\n*Motivo da Escolha:* ${answers.motivoEscolha}\n*Expectativa:* ${answers.expectativaCurso}\n\n✅ *Compromisso Aceito*\n----------------------------------`;
+                window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(message)}`, '_blank');
+            };
+
+            const handlePrint = () => {
+                window.print();
+            };
+
+            const getActiveStep = () => steps[currentStep];
             const currentData = getActiveStep();
             const progress = ((currentStep) / (steps.length - 1)) * 100;
 
             return (
                 <div className="min-h-screen flex flex-col items-center justify-center p-4 font-sans relative">
                     
-                    {/* Conteiner Principal (Card) - Reduzi o margin-bottom (mb-16 para mb-4) */}
-                    <div className="w-full max-w-lg bg-zinc-900/90 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden border border-zinc-800 relative min-h-[550px] flex flex-col z-10 mb-4">
+                    {/* --- TELA DO APP (Ocultada na impressão) --- */}
+                    <div className="screen-view w-full max-w-lg">
                         
-                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-70"></div>
-                        
-                        {currentStep > 0 && currentStep < steps.length - 1 && (
-                            <div className="w-full h-1 bg-zinc-800 absolute top-1 left-0 z-10">
-                                <div className="h-full bg-amber-400 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(251,191,36,0.5)]" style={{ width: `${progress}%` }}></div>
-                            </div>
-                        )}
+                        {/* CARD PRINCIPAL */}
+                        <div className="bg-zinc-900/90 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden border border-zinc-800 relative min-h-[550px] flex flex-col z-10 mb-4">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-70"></div>
+                            {currentStep > 0 && currentStep < steps.length - 1 && <div className="w-full h-1 bg-zinc-800 absolute top-1 left-0 z-10"><div className="h-full bg-amber-400 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(251,191,36,0.5)]" style={{ width: `${progress}%` }}></div></div>}
 
-                        <div className="p-8 flex-1 flex flex-col justify-center relative">
-                            
-                            {/* --- TELA INICIAL (INTRO) --- */}
-                            {currentData.type === 'intro' && (
-                                <div className="text-center space-y-8 py-6 animate-fadeIn">
-                                    <div className="relative mx-auto w-32 h-32 group cursor-pointer">
-                                        <div className="absolute inset-0 rounded-full border-2 border-amber-400/30 animate-pulse"></div>
-                                        
-                                        <div className="w-32 h-32 rounded-full border-4 border-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)] overflow-hidden bg-zinc-800 flex items-center justify-center relative">
-                                            <img 
-                                                src="Imagens/logo-ingrid-camila.jpg" 
-                                                className="w-full h-full object-cover" 
-                                            />
+                            <div className="p-8 flex-1 flex flex-col justify-center relative">
+                                {/* Intro */}
+                                {currentData.type === 'intro' && (
+                                    <div className="text-center space-y-8 py-6 animate-fadeIn">
+                                        <div className="relative mx-auto w-32 h-32 group cursor-pointer">
+                                            <div className="absolute inset-0 rounded-full border-2 border-amber-400/30 animate-pulse"></div>
+                                            <div className="w-32 h-32 rounded-full border-4 border-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)] overflow-hidden bg-zinc-800 flex items-center justify-center relative">
+                                                <img src="Imagens/logo-ingrid-camila.jpg" className="w-full h-full object-cover" />
+                                            </div>
                                         </div>
+                                        <div className="space-y-2"><h1 className="text-4xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200">{currentData.title}</h1><p className="text-zinc-400 text-sm tracking-widest uppercase">Ficha de Inscrição</p></div>
+                                        <p className="text-zinc-300 leading-relaxed font-light">{currentData.description}</p>
+                                        <button onClick={() => handleNext()} className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold py-4 px-6 rounded-xl transition-all shadow-lg transform hover:-translate-y-1 flex items-center justify-center gap-2">Iniciar Agora <ArrowRight className="w-5 h-5" /></button>
                                     </div>
+                                )}
 
-                                    <div className="space-y-2">
-                                        <h1 className="text-4xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200">
-                                            {currentData.title}
-                                        </h1>
-                                        <p className="text-zinc-400 text-sm tracking-widest uppercase">Ficha de Inscrição</p>
+                                {/* Inputs */}
+                                {currentData.type !== 'intro' && currentData.type !== 'summary' && (
+                                    <div className="space-y-6 animate-fadeIn w-full">
+                                        <div className="flex items-center gap-2 mb-2"><div className="bg-zinc-800 p-2 rounded-lg border border-zinc-700">{currentData.icon}</div><span className="text-xs font-bold tracking-[0.2em] text-amber-500 uppercase border border-amber-500/30 px-2 py-1 rounded bg-amber-500/10">{currentData.category}</span></div>
+                                        <h2 className="text-2xl font-serif text-white leading-tight">{currentData.title}</h2>
+                                        {currentData.subtitle && <p className="text-sm text-zinc-500 italic -mt-4 block">{currentData.subtitle}</p>}
+                                        <div className="mt-6 space-y-4">
+                                            {currentData.type === 'input' && <><input type={currentData.inputType} value={answers[currentData.id]} onChange={(e) => setAnswers({...answers, [currentData.id]: e.target.value})} placeholder={currentData.placeholder} className="w-full bg-zinc-950 border border-amber-500/30 rounded-xl p-4 text-white placeholder-zinc-600 text-lg transition-all focus:border-amber-500" autoFocus /><button onClick={() => handleNext()} disabled={!answers[currentData.id]} className="w-full mt-4 bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">Próximo <ArrowRight className="w-4 h-4" /></button></>}
+                                            {currentData.type === 'textarea' && <><textarea value={answers[currentData.id]} onChange={(e) => setAnswers({...answers, [currentData.id]: e.target.value})} placeholder={currentData.placeholder} rows="4" className="w-full bg-zinc-950 border border-amber-500/30 rounded-xl p-4 text-white placeholder-zinc-600 text-lg transition-all focus:border-amber-500 resize-none" autoFocus /><button onClick={() => handleNext()} disabled={!answers[currentData.id]} className="w-full mt-4 bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">Próximo <ArrowRight className="w-4 h-4" /></button></>}
+                                            {currentData.type === 'select' && <div className="space-y-3">{currentData.options.map((option) => (<button key={option.value} onClick={() => {setAnswers({...answers, [currentData.id]: option.value}); setTimeout(()=>handleNext(option.value),300)}} className={`w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-center justify-between group ${answers[currentData.id] === option.value ? 'border-amber-500 bg-zinc-800 text-amber-400' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-600 hover:bg-zinc-800 text-zinc-300'}`}><span className="font-medium">{option.label}</span>{answers[currentData.id] === option.value && <Check className="w-5 h-5 text-amber-400" />}</button>))}</div>}
+                                            {currentData.type === 'declaration' && <div className="animate-fadeIn"><div onClick={() => setAnswers({...answers, declaracaoAceita: !answers.declaracaoAceita})} className={`cursor-pointer p-6 rounded-xl border-2 transition-all duration-300 flex gap-4 items-start ${answers.declaracaoAceita ? 'border-amber-500 bg-zinc-900' : 'border-zinc-800 bg-zinc-950 hover:border-zinc-600'}`}><div className={`w-6 h-6 rounded border flex items-center justify-center flex-shrink-0 mt-1 transition-colors ${answers.declaracaoAceita ? 'bg-amber-500 border-amber-500' : 'border-zinc-500'}`}>{answers.declaracaoAceita && <Check className="w-4 h-4 text-black" />}</div><p className="text-zinc-300 text-sm leading-relaxed select-none">{currentData.text}</p></div><button onClick={() => handleNext()} disabled={!answers.declaracaoAceita} className="w-full mt-6 bg-green-600 hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg transition-colors shadow-lg">Finalizar Inscrição</button></div>}
+                                        </div>
+                                        <div className="mt-6"><button onClick={handleBack} className="text-zinc-500 hover:text-white text-sm flex items-center gap-1 transition-colors px-2 py-1"><ArrowLeft className="w-4 h-4" /> Voltar</button></div>
                                     </div>
-                                    <p className="text-zinc-300 leading-relaxed font-light">{currentData.description}</p>
-                                    
-                                    <button onClick={() => handleNext()} className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold py-4 px-6 rounded-xl transition-all shadow-lg transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                                        Iniciar Agora <ArrowRight className="w-5 h-5" />
-                                    </button>
-                                </div>
-                            )}
+                                )}
 
-                            {/* --- PERGUNTAS --- */}
-                            {currentData.type !== 'intro' && currentData.type !== 'summary' && (
-                                <div className="space-y-6 animate-fadeIn w-full">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <div className="bg-zinc-800 p-2 rounded-lg border border-zinc-700">{currentData.icon}</div>
-                                        <span className="text-xs font-bold tracking-[0.2em] text-amber-500 uppercase border border-amber-500/30 px-2 py-1 rounded bg-amber-500/10">
-                                            {currentData.category}
-                                        </span>
-                                    </div>
-                                    
-                                    <h2 className="text-2xl font-serif text-white leading-tight">{currentData.title}</h2>
-                                    {currentData.subtitle && <p className="text-sm text-zinc-500 italic -mt-4 block">{currentData.subtitle}</p>}
+                                {/* Summary */}
+                                {currentData.type === 'summary' && (
+                                    <div className="text-center space-y-6 animate-fadeIn">
+                                        <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-500/50"><Check className="w-10 h-10 text-green-500" /></div>
+                                        <div><h2 className="text-3xl font-serif text-white mb-2">Inscrição Concluída!</h2><p className="text-zinc-400">Seus dados estão prontos.</p></div>
+                                        
+                                        <div className="space-y-3">
+                                            <button onClick={sendToWhatsApp} className="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] flex items-center justify-center gap-3 transform hover:-translate-y-1">
+                                                <Send className="w-5 h-5" /> Enviar para Ingrid (WhatsApp)
+                                            </button>
 
-                                    <div className="mt-6 space-y-4">
-                                        {currentData.type === 'input' && (
-                                            <>
-                                                <input 
-                                                    type={currentData.inputType}
-                                                    value={answers[currentData.id]}
-                                                    onChange={(e) => handleInputChange(e, currentData.id)}
-                                                    placeholder={currentData.placeholder}
-                                                    className="w-full bg-zinc-950 border border-amber-500/30 rounded-xl p-4 text-white placeholder-zinc-600 text-lg transition-all focus:border-amber-500"
-                                                    autoFocus
-                                                />
-                                                <button onClick={() => handleNext()} disabled={!answers[currentData.id]} className="w-full mt-4 bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
-                                                    Próximo <ArrowRight className="w-4 h-4" />
-                                                </button>
-                                            </>
-                                        )}
-                                        {currentData.type === 'textarea' && (
-                                            <>
-                                                <textarea 
-                                                    value={answers[currentData.id]}
-                                                    onChange={(e) => handleInputChange(e, currentData.id)}
-                                                    placeholder={currentData.placeholder}
-                                                    rows="4"
-                                                    className="w-full bg-zinc-950 border border-amber-500/30 rounded-xl p-4 text-white placeholder-zinc-600 text-lg transition-all focus:border-amber-500 resize-none"
-                                                    autoFocus
-                                                />
-                                                <button onClick={() => handleNext()} disabled={!answers[currentData.id]} className="w-full mt-4 bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
-                                                    Próximo <ArrowRight className="w-4 h-4" />
-                                                </button>
-                                            </>
-                                        )}
-                                        {currentData.type === 'select' && (
-                                            <div className="space-y-3">
-                                                {currentData.options.map((option) => (
-                                                    <button
-                                                        key={option.value}
-                                                        onClick={() => handleSelect(option.value)}
-                                                        className={`w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-center justify-between group
-                                                            ${answers[currentData.id] === option.value 
-                                                                ? 'border-amber-500 bg-zinc-800 text-amber-400' 
-                                                                : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-600 hover:bg-zinc-800 text-zinc-300'}
-                                                        `}
-                                                    >
-                                                        <span className="font-medium">{option.label}</span>
-                                                        {answers[currentData.id] === option.value && <Check className="w-5 h-5 text-amber-400" />}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        )}
-                                        {currentData.type === 'declaration' && (
-                                            <div className="animate-fadeIn">
-                                                <div 
-                                                    onClick={handleDeclaration}
-                                                    className={`cursor-pointer p-6 rounded-xl border-2 transition-all duration-300 flex gap-4 items-start
-                                                        ${answers.declaracaoAceita 
-                                                            ? 'border-amber-500 bg-zinc-900' 
-                                                            : 'border-zinc-800 bg-zinc-950 hover:border-zinc-600'}
-                                                    `}
-                                                >
-                                                    <div className={`w-6 h-6 rounded border flex items-center justify-center flex-shrink-0 mt-1 transition-colors
-                                                        ${answers.declaracaoAceita ? 'bg-amber-500 border-amber-500' : 'border-zinc-500'}
-                                                    `}>
-                                                        {answers.declaracaoAceita && <Check className="w-4 h-4 text-black" />}
-                                                    </div>
-                                                    <p className="text-zinc-300 text-sm leading-relaxed select-none">
-                                                        {currentData.text}
-                                                    </p>
-                                                </div>
-                                                <button onClick={() => handleNext()} disabled={!answers.declaracaoAceita} className="w-full mt-6 bg-green-600 hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 rounded-lg transition-colors shadow-lg">
-                                                    Finalizar Inscrição
-                                                </button>
-                                            </div>
-                                        )}
+                                            <button onClick={handlePrint} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-4 px-6 rounded-xl transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] flex items-center justify-center gap-3 transform hover:-translate-y-1">
+                                                <Download className="w-5 h-5" /> Salvar Minha Cópia (PDF)
+                                            </button>
+                                        </div>
+                                        <p className="text-xs text-zinc-500 mt-4">Ao clicar em "Salvar", escolha a opção "Salvar como PDF" na tela de impressão.</p>
                                     </div>
-                                    <div className="mt-6">
-                                        <button onClick={handleBack} className="text-zinc-500 hover:text-white text-sm flex items-center gap-1 transition-colors px-2 py-1">
-                                            <ArrowLeft className="w-4 h-4" /> Voltar
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* --- TELA FINAL (RESUMO) --- */}
-                            {currentData.type === 'summary' && (
-                                <div className="text-center space-y-8 animate-fadeIn">
-                                    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-500/50">
-                                        <Check className="w-10 h-10 text-green-500" />
-                                    </div>
-                                    <div>
-                                        <h2 className="text-3xl font-serif text-white mb-2">Inscrição Recebida!</h2>
-                                        <p className="text-zinc-400">Obrigada, <strong>{answers.nome}</strong>. Seus dados foram salvos com sucesso.</p>
-                                    </div>
-                                    <div className="bg-zinc-800/50 p-6 rounded-xl border border-zinc-700 text-left space-y-3 text-sm">
-                                        <p><span className="text-zinc-500">Telefone:</span> <span className="text-white block">{answers.whatsapp}</span></p>
-                                        <p><span className="text-zinc-500">Instagram:</span> <span className="text-white block">{answers.instagram}</span></p>
-                                        <p><span className="text-zinc-500">Pagamento:</span> <span className="text-amber-400 font-bold block uppercase">{answers.formaPagamento === 'a_vista' ? 'À Vista' : 'Sinal + Restante'}</span></p>
-                                    </div>
-                                    <button onClick={() => window.print()} className="w-full bg-white text-black font-bold py-3 px-6 rounded-xl hover:bg-zinc-200 transition-all shadow-lg">
-                                        Salvar Comprovante
-                                    </button>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
+
+                        {/* RODAPÉ */}
+                        <footer className="w-full max-w-lg mx-auto text-center space-y-4 py-4 z-10">
+                            <div className="flex justify-center gap-6">
+                                <a href={socialLinks.instagram} target="_blank" className="flex items-center gap-2 text-zinc-400 hover:text-pink-400 transition-colors text-sm font-medium"><Instagram className="w-4 h-4" /> @ingridcamila.pmu</a>
+                                <a href={socialLinks.whatsapp} target="_blank" className="flex items-center gap-2 text-zinc-400 hover:text-green-400 transition-colors text-sm font-medium"><Phone className="w-4 h-4" /> Suporte WhatsApp</a>
+                            </div>
+                            <div className="border-t border-zinc-800 pt-4"><p className="text-xs text-zinc-600">© 2025 Método Fios de Ouro. Todos os direitos reservados.</p></div>
+                        </footer>
                     </div>
 
-                    {/* --- RODAPÉ ESSENCIAL --- */}
-                    <footer className="w-full max-w-lg mx-auto text-center space-y-4 py-4 z-10">
-                        <div className="flex justify-center gap-6">
-                            <a href={socialLinks.instagram} target="_blank" className="flex items-center gap-2 text-zinc-400 hover:text-pink-400 transition-colors text-sm font-medium">
-                                <Instagram className="w-4 h-4" /> @ingridcamila.pmu
-                            </a>
-                            <a href={socialLinks.whatsapp} target="_blank" className="flex items-center gap-2 text-zinc-400 hover:text-green-400 transition-colors text-sm font-medium">
-                                <Phone className="w-4 h-4" /> Suporte WhatsApp
-                            </a>
+                    {/* --- ÁREA DE IMPRESSÃO (PDF) --- */}
+                    {/* Esta área só aparece quando o usuário clica em imprimir (Ctrl+P ou Botão) */}
+                    <div id="print-area">
+                        <div className="pdf-container">
+                            <div className="pdf-header">
+                                <div className="pdf-logo-container">
+                                    <img src="Imagens/logo-ingrid-camila.jpg" className="pdf-logo" />
+                                </div>
+                                <h1 className="pdf-title">Método Fios de Ouro</h1>
+                                <p className="pdf-subtitle">Ficha de Inscrição Oficial</p>
+                            </div>
+
+                            <div className="pdf-section">
+                                <p className="pdf-label">Identificação da Aluna</p>
+                                <div className="pdf-value">
+                                    Nome: <strong>{answers.nome}</strong><br/>
+                                    WhatsApp: {answers.whatsapp}
+                                </div>
+                            </div>
+
+                            <div className="pdf-section">
+                                <p className="pdf-label">Experiência Profissional</p>
+                                <div className="pdf-value">
+                                    Atua na área? <strong>{answers.trabalhaComCilios === 'sim' ? 'Sim' : 'Não'}</strong><br/>
+                                    {answers.trabalhaComCilios === 'sim' && <>Tempo de Atuação: {answers.tempoExperiencia === 'menos_6_meses' ? '- 6 Meses' : answers.tempoExperiencia === '6m_1ano' ? '6 Meses - 1 Ano' : answers.tempoExperiencia === '1_2anos' ? '1 - 2 Anos' : '+ 2 Anos'}<br/>Técnica Atual: {answers.tecnicaUtilizada || 'Não informada'}</>}
+                                </div>
+                            </div>
+
+                            <div className="pdf-section">
+                                <p className="pdf-label">Diagnóstico</p>
+                                <div className="pdf-value" style={{ marginBottom: '10px' }}>
+                                    <strong>Maior Dificuldade:</strong><br/>
+                                    {answers.resultadosFaltantes || 'Não informado'}
+                                </div>
+                                <div className="pdf-value" style={{ marginBottom: '10px' }}>
+                                    <strong>Motivação:</strong><br/>
+                                    {answers.motivoEscolha || 'Não informado'}
+                                </div>
+                                <div className="pdf-value">
+                                    <strong>Objetivo:</strong><br/>
+                                    {answers.expectativaCurso || 'Não informado'}
+                                </div>
+                            </div>
+
+                            <div className="pdf-footer">
+                                <p className="text-sm font-bold" style={{ color: '#18181b' }}>Gerenciado por Ingrid Camila</p>
+                                <div className="pdf-social">
+                                    <span>@ingridcamila.pmu</span>
+                                    <span>•</span>
+                                    <span>Método Fios de Ouro</span>
+                                </div>
+                                <p className="text-xs" style={{ color: '#a1a1aa', marginTop: '10px' }}>Faça sua inscrição e torne-se referência.</p>
+                            </div>
                         </div>
-                        <div className="border-t border-zinc-800 pt-4">
-                            <p className="text-xs text-zinc-600">
-                                © 2025 Método Fios de Ouro. Todos os direitos reservados.
-                            </p>
-                        </div>
-                    </footer>
+                    </div>
 
                 </div>
             );
